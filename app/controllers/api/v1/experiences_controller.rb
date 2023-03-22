@@ -1,6 +1,5 @@
 class Api::V1::ExperiencesController < ApplicationController
   before_action :set_experience, only: [:show, :update, :destroy]
-  # skip_before_action :verify_authenticity_token
 
   def index
     resume = Resume.find(params[:resume_id])
