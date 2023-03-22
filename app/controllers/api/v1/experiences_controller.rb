@@ -3,6 +3,7 @@ class Api::V1::ExperiencesController < ApplicationController
   # skip_before_action :verify_authenticity_token
 
   def index
+    resume = Resume.find(params[:resume_id])
     @experiences = resume.experiences
     render json: @experiences
   end
@@ -13,6 +14,7 @@ class Api::V1::ExperiencesController < ApplicationController
 
   def create
     @experience = Experience.new(experience_params)
+    @experience.resume = Resume.find(params[:resume_id])
     if @experience.save
       render json: @experience, status: :created
     else
@@ -21,6 +23,7 @@ class Api::V1::ExperiencesController < ApplicationController
   end
 
   def update
+    @experience.resume = Resume.find(params[:resume_id])
     if @experience.update(experience_params)
       render json: @experience
     else

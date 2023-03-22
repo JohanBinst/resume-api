@@ -1,7 +1,9 @@
 class Api::V1::EducationsController < ApplicationController
   before_action :set_education, only: [:show, :update, :destroy]
+  # skip_before_action :verify_authenticity_token
 
   def index
+    resume = Resume.find(params[:resume_id])
     @educations = resume.educations
     render json: @educations
   end
@@ -13,6 +15,8 @@ class Api::V1::EducationsController < ApplicationController
 
   def create
     @education = Education.new(education_params)
+    resume = Resume.find(params[:resume_id])
+    @education.resume = resume
     if @education.save
       render json: @education, status: :created
     else
@@ -21,6 +25,8 @@ class Api::V1::EducationsController < ApplicationController
   end
 
   def update
+    resume = Resume.find(params[:resume_id])
+    @education.resume = resume
     if @education.update(education_params)
       render json: @education
     else
@@ -34,6 +40,14 @@ class Api::V1::EducationsController < ApplicationController
   end
 
   private
+
+  # def set_resume
+  #   @resume = Resume.find(params[:resume_id])
+  # end
+
+  def education_params
+    params.require(:education).permit(:start_date, :end_date, :school, :degree, :resume_id)
+  end
 
   def set_education
     @education = Education.find(params[:id])
