@@ -1,10 +1,9 @@
-class Api::ResumesController < ApplicationController
+class Api::V1::ResumesController < ApplicationController
   before_action :set_resume, only: [:show, :update, :destroy]
   # skip_before_action :verify_authenticity_token
 
   def index
     @resumes = Resume.all
-
     render json: @resumes
   end
 
@@ -16,7 +15,6 @@ class Api::ResumesController < ApplicationController
 
   def create
     @resume = Resume.new(resume_params)
-
     if @resume.save
       render json: @resume, status: :created
     else
@@ -35,6 +33,7 @@ class Api::ResumesController < ApplicationController
 
   def destroy
     @resume.destroy
+    head :no_content
   end
 
   private
@@ -46,5 +45,4 @@ class Api::ResumesController < ApplicationController
   def resume_params
     params.require(:resume).permit(:first_name, :last_name, :email, :phone, :summary, soft_skills: [], hard_skills: [])
   end
-
 end
