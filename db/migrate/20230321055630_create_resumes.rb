@@ -6,6 +6,9 @@ class CreateResumes < ActiveRecord::Migration[7.0]
       t.string :email
       t.text :summary
       t.string :job_title
+      t.string :phone
+      t.string :soft_skills
+      t.string :hard_skills
 
       t.timestamps
     end

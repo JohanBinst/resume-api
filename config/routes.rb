@@ -3,4 +3,9 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "articles#index"
+  root "api/resumes#index"
+  namespace :api do
+    resources :resumes
+  end
+
 end

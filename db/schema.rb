@@ -18,7 +18,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_21_055708) do
     t.date "start_date"
     t.date "end_date"
     t.string "school"
-    t.string "program"
+    t.string "location"
+    t.string "country"
+    t.string "degree"
+    t.string "major"
+    t.boolean "remote", default: false
     t.bigint "resume_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -43,6 +47,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_21_055708) do
     t.string "email"
     t.text "summary"
     t.string "job_title"
+    t.string "phone"
+    t.string "soft_skills"
+    t.string "hard_skills"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
