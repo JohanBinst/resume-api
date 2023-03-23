@@ -46,7 +46,7 @@ class Api::V1::EducationsController < ApplicationController
   # end
 
   def education_params
-    params.require(:education).permit(:start_date, :end_date, :school, :degree, :resume_id)
+    params.require(:education).permit(:start_date, :end_date, :school, :degree, :major, :location, :remote, :resume_id)
   end
 
   def set_education
