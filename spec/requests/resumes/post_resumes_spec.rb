@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Posts', type: :request do
+RSpec.describe 'Resumes', type: :request do
   describe 'POST /create' do
     context 'with valid parameters' do
       let!(:my_resume) { FactoryBot.create(:resume) }

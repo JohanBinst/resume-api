@@ -42,6 +42,6 @@ class Api::V1::ResumesController < ApplicationController
   end
 
   def resume_params
-    params.require(:resume).permit(:first_name, :last_name, :job_title, :email, :phone, :summary, :soft_skills, :hard_skills)
+    params.require(:resume).permit(:first_name, :last_name, :company, :job_title, :email, :phone, :summary, :soft_skills, :hard_skills)
   end
 end
