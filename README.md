@@ -5,6 +5,9 @@ Building my first API project. The goal of this project is to create an API that
 * Ruby version 3.1.2
 
 * System dependencies
+  - Devise Token Auth
+  - Devise
+  - jwt
 
 * Configuration
 
