@@ -3,14 +3,11 @@ class Api::V1::ResumesController < ApplicationController
   before_action :authenticate_user!, only: [:create, :update, :destroy]
 
   def index
-    @resumes = Resume.all
-    render json: @resumes
+    render json: Resume.all
   end
 
   def show
-    @educations = @resume.educations
-    @experiences = @resume.experiences
-    render json: {resume: @resume, educations: @educations, experiences: @experiences}
+    render json: { resume: @resume, educations: @resume.educations, experiences: @resume.experiences }
   end
 
   def create
@@ -23,7 +20,6 @@ class Api::V1::ResumesController < ApplicationController
   end
 
   def update
-
     if @resume.update(resume_params)
       render json: @resume
     else
@@ -43,6 +39,6 @@ class Api::V1::ResumesController < ApplicationController
   end
 
   def resume_params
-    params.require(:resume).permit(:first_name, :last_name, :company, :job_title, :email, :phone, :summary, :soft_skills, :hard_skills)
+    params.require(:resume).permit(:first_name, :last_name, :job_title, :email, :phone, :summary, :soft_skills, :hard_skills)
   end
 end
