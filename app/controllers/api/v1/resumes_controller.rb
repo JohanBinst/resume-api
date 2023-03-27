@@ -12,6 +12,7 @@ class Api::V1::ResumesController < ApplicationController
 
   def create
     @resume = Resume.new(resume_params)
+    @resume.user = current_user
     if @resume.save
       render json: @resume, status: :created
     else
