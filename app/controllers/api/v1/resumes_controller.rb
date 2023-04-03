@@ -21,7 +21,7 @@ class Api::V1::ResumesController < ApplicationController
   end
 
   def update
-    if @resume.update(resume_params)
+    if @resume.update(resume_params) && @resume.user == current_user
       render json: @resume
     else
       render json: @resume.errors, status: :unprocessable_entity
@@ -29,8 +29,12 @@ class Api::V1::ResumesController < ApplicationController
   end
 
   def destroy
-    @resume.destroy
-    head :no_content
+    if @resume.user == current_user &&
+      @resume.destroy
+      head :no_content
+    else
+      render json: @resume.errors, status: :unprocessable_entity
+    end
   end
 
   private
