@@ -1,6 +1,6 @@
 class Api::V1::EducationsController < ApplicationController
   before_action :set_education, only: [:show, :update, :destroy]
-  # skip_before_action :verify_authenticity_token
+  before_action :authenticate_user!, only: [:create, :update, :destroy]
 
   def index
     resume = Resume.find(params[:resume_id])
@@ -17,7 +17,7 @@ class Api::V1::EducationsController < ApplicationController
     @education = Education.new(education_params)
     resume = Resume.find(params[:resume_id])
     @education.resume = resume
-    if @education.save
+    if @education.save && @education.resume.user == current_user
       render json: @education, status: :created
     else
       render json: @education.errors, status: :unprocessable_entity
@@ -27,7 +27,7 @@ class Api::V1::EducationsController < ApplicationController
   def update
     resume = Resume.find(params[:resume_id])
     @education.resume = resume
-    if @education.update(education_params)
+    if @education.update(education_params) && @education.resume.user == current_user
       render json: @education
     else
       render json: @education.errors, status: :unprocessable_entity
@@ -35,8 +35,12 @@ class Api::V1::EducationsController < ApplicationController
   end
 
   def destroy
-    @education.destroy
-    head :no_content
+    if @education.resume.user == current_user
+      @education.destroy
+      head :no_content
+    else
+      render json: @education.errors, status: :unprocessable_entity
+    end
   end
 
   private

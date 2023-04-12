@@ -1,10 +1,5 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
-#   Character.create(name: "Luke", movie: movies.first)
+# seed the database with some users and their resumes
+
 puts "destroying all users and resumes ..."
 User.destroy_all
 Resume.destroy_all
@@ -18,15 +13,15 @@ johan = User.new(
 johan.save!
 
 johan_resume = Resume.new(
-                    first_name: "Johan",
-                    last_name: "Binst",
-                    email: johan.email,
-                    phone: "+687 72 03 03",
-                    summary: "I want to become the best developer",
-                    soft_skills: ["critical thinking", 'problem solving', 'teamwork'],
-                    hard_skills: ["Ruby on Rails", "Javascript", "Python", "API"],
-                    job_title: 'Software Engineer',
-                  )
+                            first_name: "Johan",
+                            last_name: "Binst",
+                            email: johan.email,
+                            phone: "+687 72 03 03",
+                            summary: "I want to become the best developer",
+                            soft_skills: ["critical thinking", 'problem solving', 'teamwork'],
+                            hard_skills: ["Ruby on Rails", "Javascript", "Python", "API"],
+                            job_title: 'Software Engineer'
+                          )
 johan_resume.user = johan
 johan_resume.save!
 

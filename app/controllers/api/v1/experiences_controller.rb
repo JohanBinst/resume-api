@@ -1,5 +1,6 @@
 class Api::V1::ExperiencesController < ApplicationController
   before_action :set_experience, only: [:show, :update, :destroy]
+  before_action :authenticate_user!, only: [:create, :update, :destroy]
 
   def index
     resume = Resume.find(params[:resume_id])
@@ -14,7 +15,7 @@ class Api::V1::ExperiencesController < ApplicationController
   def create
     @experience = Experience.new(experience_params)
     @experience.resume = Resume.find(params[:resume_id])
-    if @experience.save
+    if @experience.save && @experience.resume.user == current_user
       render json: @experience, status: :created
     else
       render json: @experience.errors, status: :unprocessable_entity
@@ -23,7 +24,7 @@ class Api::V1::ExperiencesController < ApplicationController
 
   def update
     @experience.resume = Resume.find(params[:resume_id])
-    if @experience.update(experience_params)
+    if @experience.update(experience_params) && @experience.resume.user == current_user
       render json: @experience
     else
       render json: @experience.errors, status: :unprocessable_entity
@@ -31,8 +32,12 @@ class Api::V1::ExperiencesController < ApplicationController
   end
 
   def destroy
-    @experience.destroy
-    head :no_content
+    if @experience.resume.user == current_user
+      @experience.destroy
+      head :no_content
+    else
+      render json: @experience.errors, status: :unprocessable_entity
+    end
   end
 
   private
@@ -44,5 +49,4 @@ class Api::V1::ExperiencesController < ApplicationController
   def set_experience
     @experience = Experience.find(params[:id])
   end
-
 end
