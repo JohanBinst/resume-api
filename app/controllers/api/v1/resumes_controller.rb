@@ -29,7 +29,7 @@ class Api::V1::ResumesController < ApplicationController
   end
 
   def destroy
-    if @resume.user == current_user &&
+    if @resume.user == current_user
       @resume.destroy
       head :no_content
     else
